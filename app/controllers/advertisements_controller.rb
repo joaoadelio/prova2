@@ -20,6 +20,7 @@ class AdvertisementsController < ApplicationController
     end
 
     Advertisement.all.update(@adver.id, :visualizacao => @view)
+    @atu =  Advertisement.all.where(category_id: @adver.category_id) unless params[:id].blank?
   end
 
   # GET /advertisements/new
@@ -29,6 +30,8 @@ class AdvertisementsController < ApplicationController
 
   def homepage
     @advertisements = Advertisement.all.order("visualizacao DESC, titulo ASC")
+    @advertisements = @advertisements.where(category: params[:category_id]) unless params[:category_id].blank?
+    @advertisements = @advertisements.where("UPPER(titulo) like ?", "%#{params[:search_term].to_s.upcase}%") unless params[:search_term].blank?
   end
 
   # GET /advertisements/1/edit

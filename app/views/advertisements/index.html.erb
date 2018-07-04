@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Advertisements</h1>
+<h1>Meus Auncios</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Titulo</th>
@@ -20,9 +20,9 @@
         <td><%= advertisement.descricao %></td>
         <td><%= advertisement.preco %></td>
         <td><%= advertisement.visualizacao %></td>
-        <td><%= link_to 'Show', advertisement %></td>
-        <td><%= link_to 'Edit', edit_advertisement_path(advertisement) %></td>
-        <td><%= link_to 'Destroy', advertisement, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Visualizar', advertisement, :class=> "btn btn-warning" %></td>
+        <td><%= link_to 'Editar', edit_advertisement_path(advertisement), :class=> "btn btn-info" %></td>
+        <td><%= link_to 'Deletar', advertisement, method: :delete, data: { confirm: 'Are you sure?' }, :class=> "btn btn-danger" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -30,4 +30,4 @@
 
 <br>
 
-<%= link_to 'New Advertisement', new_advertisement_path %>
+<%= link_to 'Novo Anuncio', new_advertisement_path, :class=> "btn btn-outline-success btn-lg" %>

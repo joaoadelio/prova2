@@ -1,30 +1,53 @@
 <%= title "Anuncios" %>
-
-<%= form_tag("/advertisement/homepage", method: "post") do %>
-  <%= text_field_tag(:search_term) %>
-  <%= submit_tag("Search") %>
-<% end %>
-
-<div class="row">
-  <div class="col-md-8">
-    <% @posts.each do |post| %>
-      <h2><%= post.title %> </h2>
-      <h3><%= post.subject %></h3>
-      <h3>Categoria: <%= post.category.description %></h3>
-      <p><%= postText post.text %></p>
-      <strong><%= post.author.name %></strong>
-      <hr>
-    <% end %>
-  </div>
-
-
-
-  <div class="col-md-4">
+<div class="container">
+  <div class="well well-sm">
+    Selecione uma categoria:
     <div class="btn-group" role="group" aria-label="...">
-          <% Category.all.each do |category| %>
-              <%= link_to category.descricao, homepage_posts_path(category_id: category.id), :class=> 'btn btn-default' %>
-          <%end%>
+      <% Category.all.each do |category| %>
+        <%= link_to category.descricao, homepage_advertisements_path(category_id: category.id), :class=> 'btn btn-default' %>
+      <%end%>
     </div>
   </div>
+  <div>
+    <div class="btn-group" style="float: left;">
+      <a href="#" id="list" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-th-list">
+            </span>List</a> <a href="#" id="grid" class="btn btn-default btn-sm"><span
+      class="glyphicon glyphicon-th"></span>Grid</a>
+    </div>
+    <div style="margin-left: 430px;">
+    <%= form_tag("/advertisements/homepage", method: "post") do %>
+        <span style="width: 50%;"><%= text_field_tag(:search_term) %></span>
+    <%= submit_tag("Search") %>
+        </div>
+<% end %>
+  </div>
+  <div id="products" class="row list-group">
+    <% @advertisements.each do |adver| %>
+    <div class="item  col-xs-4 col-lg-4">
+      <div class="thumbnail">
+        <%= image_tag(adver.imagens[0].big.url, :class => "img-responsive") %>
+        <div class="caption">
+          <h4 class="group inner list-group-item-heading">
+            <%= adver.titulo %></h4>
+          <p class="group inner list-group-item-text">
+            <%= adver.descricao %>
+            </p>
+          <div class="row">
+            <div class="col-xs-12 col-md-6">
+              <p class="lead">
+                R$ <%= adver.preco %></p>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <%= link_to 'Visualizar', adver, :class=> 'btn btn-success' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
 </div>
+
+
+
 

@@ -1,24 +1,87 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Titulo:</strong>
-  <%= @advertisement.titulo %>
-</p>
+<%= title @advertisement.titulo %>
 
-<p>
-  <strong>Descricao:</strong>
-  <%= @advertisement.descricao %>
-</p>
+<div class="row">
+  <div class="col-md-8">
 
-<p>
-  <strong>Preco:</strong>
-  <%= @advertisement.preco %>
-</p>
 
-<p>
-  <strong>Visualizacao:</strong>
-  <%= @advertisement.visualizacao %>
-</p>
+    <div class="row">
+  <div class="col-md-6">
+    <% @advertisement.imagens.each do |img| %>
 
-<%= link_to 'Edit', edit_advertisement_path(@advertisement) %> |
-<%= link_to 'Back', advertisements_path %>
+      <% if(!img.file.nil?) %>
+        <%= image_tag(img.big.url) %>
+      <% end %>
+    <%end %>
+  </div>
+    <div class="col-md-4">
+      <h1>
+        <strong>Preco:</strong>
+        <%= @advertisement.preco %>
+      </h1>
+      <h3><%= @advertisement.descricao %></h3>
+    </div>
+    </div>
+
+    <%= link_to 'Voltar', root_path, :class=>"btn btn-secondary" %>
+
+
+    <div style="margin-top: 60px;">
+      <hr>
+      <h2>Produtos que podem te interessar</h2>
+      <div class="container">
+
+        <div id="products" class="row list-group">
+          <% @atu.each do |atu| %>
+            <% if(atu.id != @advertisement.id) %>
+              <div class="item  col-xs-4 col-lg-4">
+                <div class="thumbnail">
+                  <%= image_tag(atu.imagens[0].big.url, :class => "img-responsive") %>
+                  <div class="caption">
+                    <h4 class="group inner list-group-item-heading">
+                      <%= atu.titulo %></h4>
+                    <p class="group inner list-group-item-text">
+                      <%= atu.descricao %>
+                    </p>
+                    <div class="row">
+                      <div class="col-xs-12 col-md-6">
+                        <p class="lead">
+                          R$ <%= atu.preco %></p>
+                      </div>
+                      <div class="col-xs-12 col-md-6">
+                        <%= link_to 'Visualizar', atu, :class=> 'btn btn-success' %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-4">
+    <div class=" anel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Informações do Vendedor</h3>
+      </div>
+      <div class="panel-body">
+        <h3><strong>Nome:</strong> <%= @advertisement.user.name %></h3>
+        <h5><strong>Telefone:</strong> <%= @advertisement.user.phone %></h5>
+        <p><strong>Endereço:</strong> <%= @advertisement.user.address %></p>
+      </div>
+    </div>
+    <p>
+      Visualizações: <%= @advertisement.visualizacao %>
+    </p>
+  </div>
+</div>
+
+
+
+
+
+

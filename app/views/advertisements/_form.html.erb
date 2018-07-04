@@ -16,17 +16,17 @@
   </div>
   <div class="field">
     <%= form.label :titulo %>
-    <%= form.text_field :titulo, id: :advertisement_titulo %>
+    <%= form.text_field :titulo, id: :advertisement_titulo, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :descricao %>
-    <%= form.text_field :descricao, id: :advertisement_descricao %>
+    <%= form.text_field :descricao, id: :advertisement_descricao, class: 'form-control' %>
   </div>
 
   <div class="field">
     <%= form.label :preco %>
-    <%= form.text_field :preco, id: :advertisement_preco %>
+    <%= form.text_field :preco, id: :advertisement_preco, class: 'form-control' %>
   </div>
 
   <% @advertisement.imagens.each do |img| %>
@@ -44,7 +44,8 @@
     <%= form.file_field :imagens, id: :advertisement_imagens, multiple:true %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div style="margin-top: 20px;"class="actions">
+    <%= form.submit :class=> "btn btn-success" %> |
+    <%= link_to 'Voltar', advertisements_path, :class =>  "btn btn-secondary" %>
   </div>
 <% end %>

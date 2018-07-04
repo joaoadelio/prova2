@@ -12,11 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :descricao %>
-    <%= form.text_field :descricao, id: :category_descricao %>
+    <%= form.label :descricao%>
+    <%= form.text_field :descricao, id: :category_descricao, :class=> 'form-control' %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div style="margin-top: 20px;"class="actions">
+    <%= form.submit :class=> "btn btn-success" %> |
+    <%= link_to 'Voltar', categories_path, :class =>  "btn btn-secondary" %>
   </div>
 <% end %>
