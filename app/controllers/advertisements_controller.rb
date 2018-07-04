@@ -1,20 +1,34 @@
 class AdvertisementsController < ApplicationController
   before_action :set_advertisement, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, except: :homepage
+  load_and_authorize_resource :except => [:homepage]
   # GET /advertisements
   # GET /advertisements.json
   def index
     @advertisements = Advertisement.all
+    @advertisements = Advertisement.where("user_id = ?", current_user.id)
   end
 
   # GET /advertisements/1
   # GET /advertisements/1.json
   def show
+    @adver = Advertisement.find(params[:id])
+    if(@adver.visualizacao.nil?)
+      @view = 1
+    else
+      @view = @adver.visualizacao + 1;
+    end
+
+    Advertisement.all.update(@adver.id, :visualizacao => @view)
   end
 
   # GET /advertisements/new
   def new
     @advertisement = Advertisement.new
+  end
+
+  def homepage
+    @advertisements = Advertisement.all.order("visualizacao DESC, titulo ASC")
   end
 
   # GET /advertisements/1/edit
@@ -25,7 +39,7 @@ class AdvertisementsController < ApplicationController
   # POST /advertisements.json
   def create
     @advertisement = Advertisement.new(advertisement_params)
-
+    @advertisement.user = current_user
     respond_to do |format|
       if @advertisement.save
         format.html { redirect_to @advertisement, notice: 'Advertisement was successfully created.' }
@@ -62,6 +76,7 @@ class AdvertisementsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_advertisement
       @advertisement = Advertisement.find(params[:id])
@@ -69,6 +84,6 @@ class AdvertisementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def advertisement_params
-      params.require(:advertisement).permit(:titulo, :descricao, :preco, :visualizacao)
+      params.require(:advertisement).permit(:titulo, :descricao, :preco, :visualizacao, {imagens: []}, :remove_imagens, :category_id)
     end
 end

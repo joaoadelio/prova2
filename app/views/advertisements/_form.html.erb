@@ -29,9 +29,19 @@
     <%= form.text_field :preco, id: :advertisement_preco %>
   </div>
 
+  <% @advertisement.imagens.each do |img| %>
+
+    <% if(!img.file.nil?) %>
+      <%= image_tag(img.thumb.url) %>
+      <% end %>
+    <%end %>
+
+
+  <%= form.check_box :remove_imagens %> Remover Imagem
+
   <div class="field">
-    <%= form.label :visualizacao %>
-    <%= form.text_field :visualizacao, id: :advertisement_visualizacao %>
+    <%= form.label :imagens %>
+    <%= form.file_field :imagens, id: :advertisement_imagens, multiple:true %>
   </div>
 
   <div class="actions">

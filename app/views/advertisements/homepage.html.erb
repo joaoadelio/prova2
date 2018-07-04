@@ -1,0 +1,30 @@
+<%= title "Anuncios" %>
+
+<%= form_tag("/advertisement/homepage", method: "post") do %>
+  <%= text_field_tag(:search_term) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+<div class="row">
+  <div class="col-md-8">
+    <% @posts.each do |post| %>
+      <h2><%= post.title %> </h2>
+      <h3><%= post.subject %></h3>
+      <h3>Categoria: <%= post.category.description %></h3>
+      <p><%= postText post.text %></p>
+      <strong><%= post.author.name %></strong>
+      <hr>
+    <% end %>
+  </div>
+
+
+
+  <div class="col-md-4">
+    <div class="btn-group" role="group" aria-label="...">
+          <% Category.all.each do |category| %>
+              <%= link_to category.descricao, homepage_posts_path(category_id: category.id), :class=> 'btn btn-default' %>
+          <%end%>
+    </div>
+  </div>
+</div>
+

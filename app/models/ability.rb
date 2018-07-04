@@ -28,5 +28,13 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+    user ||= User.new # guest user (not logged in)
+
+      can :read, :all
+      can :create, :all
+
+    can :manage, Advertisement do |advertisement|
+      advertisement.user == user
+    end
   end
 end
